@@ -1,0 +1,136 @@
+<form onsubmit="return validateForm()">
+    <!-- Tus campos de formulario aquí -->
+</form><form onsubmit="return validateForm()">
+  <!-- Tus campos de formulario aquí -->
+</form><form onsubmit="return validateForm()">
+  <!-- Tus campos de formulario aquí -->
+</form><form onsubmit="return validateForm()">
+  <!-- Tus campos de formulario aquí -->
+</form><form onsubmit="return validateForm()">
+  <!-- Tus campos de formulario aquí -->
+</form><form onsubmit="return validateForm()">
+  <!-- Tus campos de formulario aquí -->
+</form><form onsubmit="return validateForm()">
+  <!-- Tus campos de formulario aquí -->
+</form><form onsubmit="return validateForm()">
+  <!-- Tus campos de formulario aquí -->
+</form><form onsubmit="return validateForm()">
+  <!-- Tus campos de formulario aquí -->
+</form><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bootstrap Site</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+  <script>
+    function validateForm() {
+      var firstName = document.getElementById("form3Example1").value;
+      var lastName = document.getElementById("form3Example2").value;
+      var email = document.getElementById("form3Example3").value;
+      var password = document.getElementById("form3Example4").value;
+
+      // Validar nombre (al menos 2 caracteres)
+      if (firstName.length < 2 || lastName.length < 2) {
+        alert("El nombre y el apellido deben tener al menos 2 caracteres.");
+        return false;
+      }
+
+      // Validar correo electrónico
+      var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        alert("Por favor, introduce un correo electrónico válido.");
+        return false;
+      }
+
+      // Validar contraseña (mínimo 8 caracteres, al menos una mayúscula y al menos un número)
+      var passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
+      if (!passwordRegex.test(password)) {
+        alert("La contraseña debe tener al menos 8 caracteres, incluyendo al menos una letra mayúscula y al menos un número.");
+        return false;
+      }
+
+      // Si pasa todas las validaciones, el formulario es válido
+      return true;
+    }
+  </script>
+</head>
+<body>
+    <!-- Titulo "Regístrate" -->
+    <section class="vh-100 gradient-custom">
+        <div class="container py-5 h-100">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 text-center">
+              <h1 class="fw-bold mb-4 text-uppercase">Regístrate</h1>
+            </div>
+          </div>
+        </div>
+    </section>
+
+    <!-- Formulario de registro -->
+    <form onsubmit="return validateForm()">
+        <!-- 2 column grid layout with text inputs for the first and last names -->
+        <div class="row mb-4">
+          <div class="col">
+            <div data-mdb-input-init class="form-outline">
+              <input type="text" id="form3Example1" class="form-control" required />
+              <label class="form-label" for="form3Example1">monbres</label>
+            </div>
+          </div>
+          <div class="col">
+            <div data-mdb-input-init class="form-outline">
+              <input type="text" id="form3Example2" class="form-control" required />
+              <label class="form-label" for="form3Example2">Apellidos</label>
+            </div>
+          </div>
+        </div>
+      
+        <!-- Email input -->
+        <div data-mdb-input-init class="form-outline mb-4">
+          <input type="email" id="form3Example3" class="form-control" required />
+          <label class="form-label" for="form3Example3">Correo</label>
+        </div>
+      
+        <!-- Password input -->
+        <div data-mdb-input-init class="form-outline mb-4">
+          <input type="password" id="form3Example4" class="form-control" required />
+          <label class="form-label" for="form3Example4">Contraseña</label>
+        </div>
+      
+        <!-- Checkbox -->
+        <div class="form-check d-flex justify-content-center mb-4">
+          <input class="form-check-input me-2" type="checkbox" value="" id="form2Example33" checked />
+          <label class="form-check-label" for="form2Example33">
+            Subscrite
+          </label>
+        </div>
+      
+        <!-- Botón de enviar -->
+        <p class="small mb-5 pb-lg-2"><a class="text-white-50" href="login.html">Suscribete</a></p>
+        
+      
+        <!-- Botones de registro con redes sociales -->
+        <div class="text-center">
+          <p>or sign up with:</p>
+          <button data-mdb-ripple-init type="button" class="btn btn-secondary btn-floating mx-1">
+            <i class="fab fa-facebook-f"></i>
+          </button>
+      
+          <button data-mdb-ripple-init type="button" class="btn btn-secondary btn-floating mx-1">
+            <i class="fab fa-google"></i>
+          </button>
+      
+          <button data-mdb-ripple-init type="button" class="btn btn-secondary btn-floating mx-1">
+            <i class="fab fa-twitter"></i>
+          </button>
+      
+          <button data-mdb-ripple-init type="button" class="btn btn-secondary btn-floating mx-1">
+            <i class="fab fa-github"></i>
+          </button>
+        </div>
+      </form>
+      
+</body>
+</html>

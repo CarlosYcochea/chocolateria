@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'ventas/css/clientes.css' %}">
+    <title>Inventario</title>
+</head>
+<body>
+    <section>
+        <div class="nav">
+            <ul>
+                <li>
+                    <a href="#">
+                        <span class="icono"><ion-icon name="aperture"></ion-icon></span>
+                        <span class="titulo">Logo</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'dashboard' %}">
+                        <span class="icono"><ion-icon name="home-outline"></ion-icon></span>
+                        <span class="titulo">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'clientes' %}">
+                        <span class="icono"><ion-icon name="person-outline"></ion-icon></span>
+                        <span class="titulo">Clientes</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="icono"><ion-icon name="cart-outline"></ion-icon></span>
+                        <span class="titulo">Ventas</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="icono"><ion-icon name="help-circle-outline"></ion-icon></span>
+                        <span class="titulo">Ayuda</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="icono"><ion-icon name="settings-outline"></ion-icon></span>
+                        <span class="titulo">Configuración</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="icono"><ion-icon name="log-out-outline"></ion-icon></span>
+                        <span class="titulo">Cerrar Sesión</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="container">
+            <div class="topbar">
+                <div class="toggle">
+                    <ion-icon name="menu"></ion-icon>
+                </div>
+                <div class="buscar">
+                    <label for="">
+                        <input type="text" placeholder="Buscar..." name="" id="">
+                        <ion-icon name="search"></ion-icon>
+                    </label>
+                </div>
+                <div class="perfil-usuario">
+                    <img src="imgdashboard/profile-photo1.jpg" alt="">
+                </div>
+            </div>
+            <div class="detalles">
+                <div class="clientes">
+                    <div class="header">
+                        <h2>Clientes</h2>
+                    </div>
+                    <form id="formulario-cliente">
+                    <label for="">Nombre</label>
+                    <input type="text" placeholder="Ingrese su nombre" id="Nombre" required>
+                    <label for="">Rut</label>
+                    <input type="text" placeholder="Ingrese su rut" id="Rut" required>
+                    <label for="">Email</label>
+                    <input type="email" name="email" placeholder="Ingrese su email" id="Email" required>
+                    <label for="">Telefono</label>
+                    <input type="text" placeholder="Ingrese su telefono" id="telefono" required>
+                    <label for="">Direccion</label>
+                    <input type="text" placeholder="Ingrese su direccion" id="direccion" required>
+                    <button type="submit" id="Guardar" >Guardar</button>
+                    </form>
+                    <div>
+                        <table class="tabla-clientes">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Rut</th>
+                                    <th>Email</th>
+                                    <th>Telefono</th>
+                                    <th>Direccion</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </section>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="{% static 'ventas/js/clientes.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</body>
+</html>

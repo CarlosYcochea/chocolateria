@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'ventas/css/dashboard.css' %}">
+    <title>Inventario</title>
+</head>
+<body>
+    <section>
+        <div class="nav">
+            <ul>
+                <li>
+                    <a href="#">
+                        <span class="icono"><ion-icon name="aperture"></ion-icon></span>
+                        <span class="titulo">Logo</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'dashboard' %}">
+                        <span class="icono"><ion-icon name="home-outline"></ion-icon></span>
+                        <span class="titulo">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'clientes' %}">
+                        <span class="icono"><ion-icon name="person-outline"></ion-icon></span>
+                        <span class="titulo">Clientes</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="icono"><ion-icon name="cart-outline"></ion-icon></span>
+                        <span class="titulo">Ventas</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="icono"><ion-icon name="help-circle-outline"></ion-icon></span>
+                        <span class="titulo">Ayuda</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="icono"><ion-icon name="settings-outline"></ion-icon></span>
+                        <span class="titulo">Configuración</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'index' %}">
+                        <span class="icono"><ion-icon name="log-out-outline"></ion-icon></span>
+                        <span class="titulo">Cerrar Sesión</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="container">
+            <div class="topbar">
+                <div class="toggle">
+                    <ion-icon name="menu"></ion-icon>
+                </div>
+                <div class="buscar">
+                    <label for="">
+                        <input type="text" placeholder="Buscar..." name="" id="">
+                        <ion-icon name="search"></ion-icon>
+                    </label>
+                </div>
+                <div class="perfil-usuario">
+                    <img src="{% static 'ventas/img/profile-photo1.jpg' %}" alt="">
+                </div>
+            </div>
+            <div class="cards">
+                <div class="card">
+                    <div>
+                        <span class="card-numeros">2,345</span>
+                        <span class="card-nombre">Visitas</span>
+                    </div>
+                    <div class="card-icono">
+                        <ion-icon name="eye"></ion-icon>
+                    </div>
+                </div>
+                <div class="card">
+                    <div>
+                        <span class="card-numeros">1,342</span>
+                        <span class="card-nombre">Ventas</span>
+                    </div>
+                    <div class="card-icono">
+                        <ion-icon name="cash"></ion-icon>
+                    </div>
+                </div>
+                <div class="card">
+                    <div>
+                        <span class="card-numeros">475</span>
+                        <span class="card-nombre">Mensajes</span>
+                    </div>
+                    <div class="card-icono">
+                        <ion-icon name="mail"></ion-icon>
+                    </div>
+                </div>
+                <div class="card">
+                    <div>
+                        <span class="card-numeros">$6,879</span>
+                        <span class="card-nombre">Ganancias</span>
+                    </div>
+                    <div class="card-icono">
+                        <ion-icon name="trending-up"></ion-icon>
+                    </div>
+                </div>
+            </div>
+            <div class="detalles">
+                <div class="ordenes-recientes">
+                    <div class="header">
+                        <h2>Órdenes Recientes</h2>
+                        <a href="#" class="boton-limpiar" onclick="ocultarTabla()">Limpiar</a>
+                        <a href="#" class="boton" onclick="mostrarTabla()">Ver todos</a>
+                    </div>
+                    <table id="miTabla" style="display: none;">
+                        <thead>
+                            <th>Nombre</th>
+                            <th>Precio</th>
+                            <th>Pago</th>
+                            <th>Estatus</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Trencito</td>
+                                <td>$2.000</td>
+                                <td>Pendiente</td>
+                                <td><span class="estatus pendiente">Pendiente</span></td>
+                            </tr>
+                            <tr>
+                                <td>Sahne-nuss</td>
+                                <td>$10.000</td>
+                                <td>Pagado</td>
+                                <td><span class="estatus devuelto">Devuelto</span></td>
+                            </tr>
+                            <tr>
+                                <td>Milka</td>
+                                <td>$2.000</td>
+                                <td>Pendiente</td>
+                                <td><span class="estatus en-progreso">En Progreso</span></td>
+                            </tr>
+                            <tr>
+                                <td>Oreo</td>
+                                <td>$1.000</td>
+                                <td>Pagado</td>
+                                <td><span class="estatus pendiente">Pendiente</span></td>
+                            </tr>
+                            <tr>
+                                <td>Turron</td>
+                                <td>$2.500</td>
+                                <td>Pagado</td>
+                                <td><span class="estatus entregado">Entregado</span></td>
+                            </tr>
+                            <tr>
+                                <td>Mantecol</td>
+                                <td>$3.500</td>
+                                <td>Pendiente</td>
+                                <td><span class="estatus en-progreso">En Progreso</span></td>
+                            </tr>
+                            <tr>
+                                <td>Orly</td>
+                                <td>$1.000</td>
+                                <td>Pagado</td>
+                                <td><span class="estatus entregado">Entregado</span></td>
+                            </tr>
+                            <tr>
+                                <td>Ferrero Rocher</td>
+                                <td>$6.000</td>
+                                <td>Pendiente</td>
+                                <td><span class="estatus devuelto">Devuelto</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+    </section>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="{% static 'ventas/js/dashboard.js' %}"></script>
+</body>
+</html>
