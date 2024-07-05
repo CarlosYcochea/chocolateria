@@ -76,42 +76,28 @@
                         <h2>Clientes</h2>
                     </div>
 
-                    <button type="button">
-                        <a href="{% url 'clientesAdd' %}"> Agregar </a>
-                    </button>
-            
-                    <div id="idMensajes">
-                        {% if mensaje %}
+                    <div style=" text-align: center;">
+                        <h2>Formulario de clientes</h2>
+                        <form action="clientesAdd" method="post" >
+                            {% csrf_token %}
+                
+                            <pre>Rut:                     <input type="text" name="rut"    ></pre>
+                            <pre>Nombre:                  <input type="text" name="nombre"  ></pre>
+                            <pre>Apellido:             <input type="text" name="apellido"></pre>
+                            <pre>Celular:                 <input type="text" name="telefono"></pre>
+                            <pre>Email :                  <input type="email" name="email" ></pre>
+                
+                            <input type="submit" name="opcion" value="Agregar">
+                
+                        </form><br><br>
+                        <a href="{% url 'clientes' %}"> Volver </a>
+                        <br>
+                        <div id="idMensajes">
+                            {% if mensaje %}
                             {{mensaje}}
-                        {% endif %}    
+                            {% endif %}
+                        </div>
                     </div>
-            
-            
-            
-                    <table>
-                        {% if clientes %}
-                            <th>Rut</th>
-                            <th>Nombre</th>
-                            <th>Apellido</th>
-                            <th>Telefono</th>
-                            <th>Email</th>
-                            <th>Eliminar</th>
-                            <th>Modificar</th>
-                            {% for cliente in clientes %}
-                                <tr>
-                                    <td>{{ cliente.rut }}
-                                    <td>{{ cliente.nombre }}
-                                    <td>{{ cliente.apellido }}
-                                    <td>{{ cliente.telefono }}
-                                    <td>{{ cliente.email }}       
-                                    <td><a href="{% url 'clientes_del' pk=cliente.rut %}">Eliminar</a>
-                                    <td><a href="{% url 'clientes_findEdit' pk=cliente.rut %}">Modificar</a>
-                                    
-                                </tr>
-                            {% endfor %}
-                        {% endif %}        
-                    </table>
-                    
                 </div>
             </div>
         </div>
