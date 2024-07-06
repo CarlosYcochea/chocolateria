@@ -48,13 +48,13 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="{% url 'categorias' %}">
                         <span class="icono"><ion-icon name="settings-outline"></ion-icon></span>
                         <span class="titulo">Categorias</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{% url 'index' %}">
+                    <a href="#">
                         <span class="icono"><ion-icon name="log-out-outline"></ion-icon></span>
                         <span class="titulo">Cerrar Sesión</span>
                     </a>
@@ -79,19 +79,45 @@
             <div class="detalles">
                 <div class="clientes">
                     <div class="header">
-                        <h2>Ventas</h2>
+                        <h2>Categorias</h2>
                     </div>
 
-                    <div style="text-align: center;">
-                        <h2>Formulario CRUD para categorias</h2><br>
-                        <form action="" method="post">
-                            {% csrf_token %}
-                            {{ form.as_table }}
-                            <input type="submit" value="Agregar">
-                        </form><br><br>
-                        <a href="{% url 'categorias' %}">Volver</a>
+                    <button type="button">
+                        <a href="{% url 'productosAdd' %}"> Agregar </a>
+                    </button>
+            
+                    <div id="idMensajes">
+                        {% if mensaje %}
+                            {{mensaje}}
+                        {% endif %}    
                     </div>
-                
+            
+            
+            
+                    <table>
+                        {% if productos %}
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Descripción</th>
+                                <th>Precio</th>
+                                <th>Eliminar</th>
+                                <th>Modificar</th>
+                            </tr>
+                            {% for producto in productos %}
+                                <tr>
+                                    <td>{{ producto.nombre }}</td>
+                                    <td>{{ producto.descripcion }}</td>
+                                    <td>{{ producto.precio }}</td>
+                                    <td><a href="{% url 'producto_del' pk=producto.id_productos %}">Eliminar</a></td>
+                                    <td><a href="{% url 'producto_findEdit' pk=producto.id_productos %}">Modificar</a></td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="5">No hay productos disponibles.</td>
+                            </tr>
+                        {% endif %}
+                    </table>
                     
                 </div>
             </div>
