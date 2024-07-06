@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Clientes, Categorias, Ventas, DetalleVentas, Productos
-from .forms import VentasForm
+from .forms import VentasForm, CategoriaForm
 
 
 # Create your views here.
@@ -169,7 +169,7 @@ def ventas_findEdit(request, pk):
         ventas = Ventas.objects.all()
         mensaje = "Error, id no existe"
         context = {'mensaje': mensaje, 'ventas': ventas}
-        return render(request, 'ventas/ventas_list.html', context)
+        return render(request, 'ventas/ventas.html', context)
         
 def ventasUpdate(request):
 
@@ -203,24 +203,14 @@ def categorias(request):
     return render(request, 'ventas/categorias.html',context)
 
 def categoriasAdd(request):
-    if  request.method !="POST":
-        
-        productos = Productos.objects.all()
-        context={'productos':productos}
-        return render(request, 'ventas/categorias_add.html', context)
-    elif  request.method =="POST":
-
-
-
-        nombre=request.POST["nombre"]
-        descripcion=request.POST["descripcion"]
-
-        obj=Categorias.objects.create(nombre=nombre,
-                                    descripcion=descripcion,
-                                    )
-        obj.save()
-        context={'mensaje':"OK, datos grabados..."}
-        return render(request, 'ventas/categorias_add.html', context)
+    if request.method == 'POST':
+        form = CategoriaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('ventas/categorias.html')
+    else:
+        form = CategoriaForm()
+    return render(request, 'ventas/categorias_add.html', {'form': form})
 
 def categorias_del(request, pk):
     context={}
@@ -239,18 +229,26 @@ def categorias_del(request, pk):
         return render(request, 'ventas/categorias.html', context)
     
 def categorias_findEdit(request, pk):
-
-     if pk != "":
-        categoria=Categorias.objects.get(id_categorias=pk)
-
-
-        context={'categoria':categoria}
-        if categoria:
-            return render(request, 'ventas/categorias_edit.html', context)
+    try:
+        categoria = Categorias.objects.get(id_categorias=pk)  # Asegúrate de que 'id_categoria' es el nombre correcto del campo clave primaria en tu modelo Categoria
+        if request.method == "POST":
+            form = CategoriaForm(request.POST, instance=categoria)
+            if form.is_valid():
+                form.save()
+                mensaje = "Bien, datos actualizados..."
+                return redirect('ventas/categorias_edit.html')  # Cambia esto por el nombre de tu URL de listado de categorías
+            else:
+                mensaje = "Error, el formulario no es válido"
+                context = {'categoria': categoria, 'form': form, 'mensaje': mensaje}
+                return render(request, 'ventas/categorias_edit.html', context)
         else:
-            context={'mensaje':"Error, rut no existe..."}
-            return render(request, 'ventas/categorias.html', context)
-
+            form = CategoriaForm(instance=categoria)
+            context = {'categoria': categoria, 'form': form}
+            return render(request, 'ventas/categorias_edit.html', context)
+    except Categorias.DoesNotExist:
+        mensaje = "Error, id no existe"
+        return redirect('ventas/categorias.html')  # Cambia esto por el nombre de tu URL de listado de categorías
+    
 def categoriasUpdate(request):
 
     if request.method == "POST":
