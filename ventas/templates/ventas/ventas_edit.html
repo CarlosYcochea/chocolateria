@@ -83,38 +83,13 @@
                     </div>
 
                     <div style="text-align: center;">
-
-                        {% if venta %}
-                            <h2>Formulario Actualizar Datos de Ventas</h2><br>
-                
-                            <form action="{% url 'ventasUpdate' %}" method="post">
-                                {% csrf_token %}
-                
-                                <pre>Nombre:                              <select name="rut">
-                
-                                    {% for cliente in clientes %}
-                
-                                        {% if cliente.nombre == ventas.rut.nombre %}
-                                            <option value="{{cliente.rut}}" selected>{{cliente.nombre}}</option>
-                                        {% else %}
-                                            <option value="{{cliente.rut}}" >{{cliente.nombre}}</option>
-                                        {% endif %}        
-                                    {% endfor %}    
-                                </select></pre>
-
-                                <pre>Fecha:                  <input type="date" name="fechaventas"  value="{{ventas.fechaventas}}"></pre>
-                                <pre>total:                 <input type="number" name="total" value="{{alumno.total}}"></pre>
-                                <input type="submit" name="opcion" value="Actualizar">
-                                
-                            </form><br><br>
-                        {% endif %}
-                        <div id="idMensajes">
-                            {% if mensaje %}
-                                {{mensaje}}
-                            {% endif %}
-                        </div>
-                        <br><br>
-                        <a href="{% url 'crud' %}"> Volver </a>    
+                        <h2>Formulario CRUD para Ventas</h2><br>
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            {{ form.as_table }}
+                            <input type="submit" value="Agregar">
+                        </form><br><br>
+                        <a href="{% url 'ventas' %}">Volver</a>
                     </div>
                 
                     
