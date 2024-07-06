@@ -15,18 +15,10 @@ urlpatterns = [
     path('clientes_del/<str:pk>', clientes_del, name='clientes_del'),
     path('clientes_findEdit/<str:pk>', clientes_findEdit, name='clientes_findEdit'),
     path('clientesUpdate', clientesUpdate, name='clientesUpdate'),
-<<<<<<< HEAD
     path('ventas', ventas, name='ventas'),
     path('ventasAdd', ventasAdd, name='ventasAdd'),
     path('ventas_del/<str:pk>', ventas_del, name='ventas_del'),
     path('ventas_findEdit/<str:pk>', ventas_findEdit, name='ventas_findEdit'),
     path('ventasUpdate', ventasUpdate, name='ventasUpdate'),
-=======
-    path('categorias', categorias, name='categorias'),
-    path('categoriasAdd', categoriasAdd, name='categoriasAdd'),
-    path('categorias_del/<str:pk>', categorias_del, name='categorias_del'),
-    path('categorias_findEdit/<str:pk>', categorias_findEdit, name='categorias_findEdit' ),
-    path('categoriasUpdate', categoriasUpdate, name='categoriasUpdate')
->>>>>>> carlos
 
 ]
