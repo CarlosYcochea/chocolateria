@@ -1,5 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Clientes, Categorias, Ventas, DetalleVentas, Productos
+from .forms import VentasForm
+
 
 # Create your views here.
 
@@ -110,33 +112,19 @@ def ventas(request):
     return render(request, 'ventas/ventas.html',context)
 
 def ventasAdd(request):
-    if  request.method !="POST":
-        
-        productos = Productos.objects.all()
-        context={'productos':productos}
-        return render(request, 'ventas/ventas_add.html', context)
-    elif  request.method =="POST":
-
-
-        nombre=request.POST["rut"]
-        fechaventas=request.POST["fechaventas"]
-        total=request.POST["total"]
-
-
-
-        objcliente=Clientes.objects.get(rut = nombre)
-        obj=Ventas.objects.create(  fechaventas=fechaventas,
-                                    total=total,
-                                    rut=objcliente
-                                    )
-        obj.save()
-        context={'mensaje':"OK, datos grabados..."}
-        return render(request, 'ventas/ventas_add.html', context)
+    if request.method == 'POST':
+        form = VentasForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('ventas/ventas_add.html')
+    else:
+        form = VentasForm()
+    return render(request, 'ventas/ventas_add.html', {'form': form})
 
 def ventas_del(request,pk):
     context={}
     try:
-        venta=Ventas.objects.get(id=pk)
+        venta=Ventas.objects.get(id_ventas=pk)
 
         venta.delete()
         mensaje="Bien, datos eliminados..."
@@ -149,19 +137,39 @@ def ventas_del(request,pk):
         context = {'ventas': ventas,  'mensaje' : mensaje}
         return render(request, 'ventas/ventas.html', context)
 
-def ventas_findEdit(request,pk):
-
-    if pk != "":
-        venta=Ventas.objects.get(id=pk)
-        clientes = Clientes.objects.all()
-
-
-        context={'venta':venta, 'clientes':clientes}
+def ventas_findEdit(request, pk):
+    try:
+        venta = Ventas.objects.get(id_ventas=pk)  # Asegúrate de que 'id' es el nombre correcto del campo clave primaria en tu modelo Ventas
+        context = {}
         if venta:
-            return render(request, 'ventas/ventas_edit.html', context)
-        else:
-            context={'mensaje':"Error, id no existe..."}
-            return render(request, 'ventas/ventas.html', context)
+            print("Edit encontró la venta...")
+            if request.method == "POST":
+                print("Edit, es un POST")
+                form = VentasForm(request.POST, instance=venta)
+                if form.is_valid():  # Asegúrate de validar el formulario antes de guardarlo
+                    form.save()
+                    mensaje = "Bien, datos actualizados..."
+                    print(mensaje)
+                    context = {'venta': venta, 'form': form, 'mensaje': mensaje}
+                    return render(request, 'ventas/ventas_edit.html', context)
+                else:
+                    # En caso de que el formulario no sea válido, también deberías manejar esta situación
+                    print("Formulario no válido")
+                    mensaje = "Error, el formulario no es válido"
+                    context = {'venta': venta, 'form': form, 'mensaje': mensaje}
+                    return render(request, 'ventas/ventas_edit.html', context)
+            else:
+                print("Edit, No es un POST")
+                form = VentasForm(instance=venta)
+                mensaje = ""
+                context = {'venta': venta, 'form': form, 'mensaje': mensaje}
+                return render(request, 'ventas/ventas_edit.html', context)
+    except Ventas.DoesNotExist:  # Es mejor capturar la excepción específica
+        print("Error, id no existe...")
+        ventas = Ventas.objects.all()
+        mensaje = "Error, id no existe"
+        context = {'mensaje': mensaje, 'ventas': ventas}
+        return render(request, 'ventas/ventas_list.html', context)
         
 def ventasUpdate(request):
 
