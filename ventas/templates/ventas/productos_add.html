@@ -83,15 +83,14 @@
                     </div>
 
                     <div style="text-align: center;">
-                        <h2>Formulario CRUD para categorias</h2><br>
-                        <form action="" method="post">
+                        <h2>Formulario CRUD para productos</h2><br>
+                        <form action="" method="POST">
                             {% csrf_token %}
-                            {{ form.as_table }}
+                            {{ form.as_p }}
                             <input type="submit" value="Agregar">
                         </form><br><br>
-                        <a href="{% url 'categorias' %}">Volver</a>
+                        <a href="{% url 'productos' %}">Volver</a>
                     </div>
-                
                     
                 </div>
             </div>
