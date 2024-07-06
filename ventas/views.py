@@ -187,4 +187,80 @@ def ventasUpdate(request):
 
         ventas = Ventas.objects.all()
         context={'ventas':ventas}
-        return render(request, 'ventas/ventas_edit.html', context)        
+        return render(request, 'ventas/ventas_edit.html', context)
+
+def categorias(request):
+    categorias = Categorias.objects.all()
+    context = {"categorias" :categorias}
+    return render(request, 'ventas/categorias.html',context)
+
+def categoriasAdd(request):
+    if  request.method !="POST":
+        
+        productos = Productos.objects.all()
+        context={'productos':productos}
+        return render(request, 'ventas/categorias_add.html', context)
+    elif  request.method =="POST":
+
+
+
+        nombre=request.POST["nombre"]
+        descripcion=request.POST["descripcion"]
+
+        obj=Categorias.objects.create(nombre=nombre,
+                                    descripcion=descripcion,
+                                    )
+        obj.save()
+        context={'mensaje':"OK, datos grabados..."}
+        return render(request, 'ventas/categorias_add.html', context)
+
+def categorias_del(request, pk):
+    context={}
+    try:
+        categoria = Categorias.objects.get(id_categorias=pk)
+
+        categoria.delete()
+        mensaje="Bien, datos eliminados..."
+        categorias = Categorias.objects.all()
+        context = {'categorias':categorias,  'mensaje' : mensaje}
+        return render(request, 'ventas/categorias.html', context)
+    except:
+        mensaje="Error, rut no existe..."
+        categorias = Categorias.objects.all()
+        context = {'categorias':categorias,  'mensaje' : mensaje}
+        return render(request, 'ventas/categorias.html', context)
+    
+def categorias_findEdit(request, pk):
+
+     if pk != "":
+        categoria=Categorias.objects.get(id_categorias=pk)
+
+
+        context={'categoria':categoria}
+        if categoria:
+            return render(request, 'ventas/categorias_edit.html', context)
+        else:
+            context={'mensaje':"Error, rut no existe..."}
+            return render(request, 'ventas/categorias.html', context)
+
+def categoriasUpdate(request):
+
+    if request.method == "POST":
+
+
+        nombre=request.POST["nombre"]
+        descripcion=request.POST["descripcion"]
+
+
+        categoria = Categorias()
+        categoria.nombre=nombre
+        categoria.descripcion=descripcion
+        categoria.save()
+
+        context={'mensaje':"Ok, datos actualizados...",'categoria':categoria }
+        return render(request, 'ventas/categorias_edit.html', context)
+    else:
+
+        categorias = Categorias.objects.all()
+        context={'categorias':categorias}
+        return render(request, 'ventas/categorias_edit.html', context)            
