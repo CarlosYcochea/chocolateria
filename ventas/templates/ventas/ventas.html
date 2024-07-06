@@ -79,7 +79,7 @@
             <div class="detalles">
                 <div class="clientes">
                     <div class="header">
-                        <h2>Clientes</h2>
+                        <h2>Ventas</h2>
                     </div>
 
                     <button type="button">
@@ -96,20 +96,18 @@
             
                     <table>
                         {% if ventas %}
-                            <th>Id</th>
-                            <th>Rut</th>
+                            <th>Nombre</th>
                             <th>Fecha</th>
                             <th>Total</th>
                             <th>Eliminar</th>
                             <th>Modificar</th>
                             {% for venta in ventas %}
                                 <tr>
-                                    <td>{{ venta.id }}
                                     <td>{{ venta.rut }}
-                                    <td>{{ venta.fecha }}
+                                    <td>{{ venta.fechaventas }}
                                     <td>{{ venta.total }}      
-                                    <td><a href="{% url 'ventas_del' pk=venta.id %}">Eliminar</a>
-                                    <td><a href="{% url 'ventas_findEdit' pk=venta.id %}">Modificar</a>
+                                    <td><a href="{% url 'ventas_del' pk=venta.id_ventas %}">Eliminar</a>
+                                    <td><a href="{% url 'ventas_findEdit' pk=venta.id_ventas %}">Modificar</a>
                                     
                                 </tr>
                             {% endfor %}

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import index, login, dashboard, clientes, clientesAdd, clientes_del, clientes_findEdit, clientesUpdate, ventas, ventasAdd, ventas_del, ventas_findEdit, ventasUpdate, categorias, categorias_del, categorias_findEdit, categoriasUpdate
+from .views import index, login, dashboard, clientes, clientesAdd, clientes_del, clientes_findEdit, clientesUpdate, ventas, ventasAdd, ventas_del, ventas_findEdit, ventasUpdate, categorias, categoriasAdd, categorias_del, categorias_findEdit, categoriasUpdate
 
 
 urlpatterns = [

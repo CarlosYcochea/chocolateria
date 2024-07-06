@@ -1,38 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'ventas/css/clientes.css' %}">
+    <title>Inventario</title>
 </head>
 <body>
-    
-    <div style=" text-align: center;">
-        <h2> Formulario CRUD para Ventas</h2><br>
-        <form action="ventasAdd" method="post">
-            {% csrf_token %}
-
-            <pre>Rut:            <select name="cliente">
-                {% for genero in generos %}
-                    <option value="{{genero.id_genero}}">{{genero.genero}}</option>
-                {% endfor %}
-                </select></pre>
-            <pre>Fecha:         <input type="date" name="fecha"></pre>
-            <pre>celular:       <input type="text" name="telefono"></pre>
-            <pre>Email:        <input type="email" name="email"></pre>
-            <pre>Direccion:     <input type="text" name="direccion"></pre>
-
-            <input type="submit" name="opcion" value="Agregar">
-        </form><br><br>
-        <a href="{% url 'crud' %}">Volver</a>
-        <br>
-        <div id="idMensajes">
-            {% if mensaje %}
-            {{mensaje}}
-            {% endif %}
-
+    <section>
+        <div class="nav">
+            <ul>
+                <li>
+                    <a href="#">
+                        <span class="icono"><ion-icon name="aperture"></ion-icon></span>
+                        <span class="titulo">Logo</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'dashboard' %}">
+                        <span class="icono"><ion-icon name="home-outline"></ion-icon></span>
+                        <span class="titulo">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'clientes' %}">
+                        <span class="icono"><ion-icon name="person-outline"></ion-icon></span>
+                        <span class="titulo">Clientes</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="icono"><ion-icon name="cart-outline"></ion-icon></span>
+                        <span class="titulo">Ventas</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="icono"><ion-icon name="help-circle-outline"></ion-icon></span>
+                        <span class="titulo">Productos</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="icono"><ion-icon name="settings-outline"></ion-icon></span>
+                        <span class="titulo">Detalle venta</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="icono"><ion-icon name="settings-outline"></ion-icon></span>
+                        <span class="titulo">Categorias</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'index' %}">
+                        <span class="icono"><ion-icon name="log-out-outline"></ion-icon></span>
+                        <span class="titulo">Cerrar Sesión</span>
+                    </a>
+                </li>
+            </ul>
         </div>
-    </div>
-    
+        <div class="container">
+            <div class="topbar">
+                <div class="toggle">
+                    <ion-icon name="menu"></ion-icon>
+                </div>
+                <div class="buscar">
+                    <label for="">
+                        <input type="text" placeholder="Buscar..." name="" id="">
+                        <ion-icon name="search"></ion-icon>
+                    </label>
+                </div>
+                <div class="perfil-usuario">
+                    <img src="imgdashboard/profile-photo1.jpg" alt="">
+                </div>
+            </div>
+            <div class="detalles">
+                <div class="clientes">
+                    <div class="header">
+                        <h2>Ventas</h2>
+                    </div>
+
+                    <div style=" text-align: center;">
+                        <h2> Formulario CRUD para Ventas</h2><br>
+                        <form action="ventasAdd" method="post">
+                            {% csrf_token %}
+                
+                            <pre>Nombre:            <select name="rut">
+                                {% for cliente in clientes %}
+                                    <option value="{{cliente.rut}}">{{cliente.nombre}}</option>
+                                {% endfor %}
+                                </select></pre>
+                            <pre>Fecha:         <input type="date" name="fechaventas"></pre>
+                            <pre>Total:       <input type="number" name="total"></pre>
+                
+                            <input type="submit" name="opcion" value="Agregar">
+                        </form><br><br>
+                        <a href="{% url 'ventas' %}">Volver</a>
+                        <br>
+                        <div id="idMensajes">
+                            {% if mensaje %}
+                            {{mensaje}}
+                            {% endif %}
+                
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        
+    </section>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="{% static 'ventas/js/clientes.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </body>
 </html>

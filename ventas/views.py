@@ -118,16 +118,16 @@ def ventasAdd(request):
     elif  request.method =="POST":
 
 
-
-        fecha=request.POST["fecha"]
+        nombre=request.POST["rut"]
+        fechaventas=request.POST["fechaventas"]
         total=request.POST["total"]
-        cliente=request.POST["cliente"]
 
 
-        objcliente=Clientes.objects.get(rut=cliente)
-        obj=Ventas.objects.create(  fecha=fecha,
+
+        objcliente=Clientes.objects.get(rut = nombre)
+        obj=Ventas.objects.create(  fechaventas=fechaventas,
                                     total=total,
-                                    cliente=objcliente
+                                    rut=objcliente
                                     )
         obj.save()
         context={'mensaje':"OK, datos grabados..."}
@@ -168,16 +168,16 @@ def ventasUpdate(request):
     if request.method == "POST":
 
 
-        fecha=request.POST["fecha"]
+        fecha=request.POST["fechaventas"]
         total=request.POST["total"]
-        cliente=request.POST["cliente"]
+        nombre=request.POST["rut"]
 
-        objcliente=Clientes.objects.get(rut=cliente)
+        objcliente=Clientes.objects.get(rut=nombre)
 
         venta = Ventas()
-        venta.fecha=fecha
+        venta.fechaventas=fecha
         venta.total=total
-        venta.cliente=objcliente
+        venta.rut=objcliente
         venta.save()
 
         clientes = Clientes.objects.all()
