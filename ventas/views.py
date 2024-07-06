@@ -102,4 +102,89 @@ def clientesUpdate(request):
 
         clientes = Clientes.objects.all()
         context={'clientes':clientes}
-        return render(request, 'ventas/clientes_edit.html', context)    
+        return render(request, 'ventas/clientes_edit.html', context)
+
+def ventas(request):
+    ventas = Ventas.objects.all()
+    context = {"ventas" :ventas}
+    return render(request, 'ventas/ventas.html',context)
+
+def ventasAdd(request):
+    if  request.method !="POST":
+        
+        productos = Productos.objects.all()
+        context={'productos':productos}
+        return render(request, 'ventas/ventas_add.html', context)
+    elif  request.method =="POST":
+
+
+
+        fecha=request.POST["fecha"]
+        total=request.POST["total"]
+        cliente=request.POST["cliente"]
+
+
+        objcliente=Clientes.objects.get(rut=cliente)
+        obj=Ventas.objects.create(  fecha=fecha,
+                                    total=total,
+                                    cliente=objcliente
+                                    )
+        obj.save()
+        context={'mensaje':"OK, datos grabados..."}
+        return render(request, 'ventas/ventas_add.html', context)
+
+def ventas_del(request,pk):
+    context={}
+    try:
+        venta=Ventas.objects.get(id=pk)
+
+        venta.delete()
+        mensaje="Bien, datos eliminados..."
+        ventas = Ventas.objects.all()
+        context = {'ventas': ventas,  'mensaje' : mensaje}
+        return render(request, 'ventas/ventas.html', context)
+    except:
+        mensaje="Error, id no existe..."
+        ventas = Ventas.objects.all()
+        context = {'ventas': ventas,  'mensaje' : mensaje}
+        return render(request, 'ventas/ventas.html', context)
+
+def ventas_findEdit(request,pk):
+
+    if pk != "":
+        venta=Ventas.objects.get(id=pk)
+        clientes = Clientes.objects.all()
+
+
+        context={'venta':venta, 'clientes':clientes}
+        if venta:
+            return render(request, 'ventas/ventas_edit.html', context)
+        else:
+            context={'mensaje':"Error, id no existe..."}
+            return render(request, 'ventas/ventas.html', context)
+        
+def ventasUpdate(request):
+
+    if request.method == "POST":
+
+
+        fecha=request.POST["fecha"]
+        total=request.POST["total"]
+        cliente=request.POST["cliente"]
+
+        objcliente=Clientes.objects.get(rut=cliente)
+
+        venta = Ventas()
+        venta.fecha=fecha
+        venta.total=total
+        venta.cliente=objcliente
+        venta.save()
+
+        clientes = Clientes.objects.all()
+        context={'mensaje':"Ok, datos actualizados...",'venta':venta, 'clientes':clientes}
+        return render(request, 'ventas/ventas_edit.html', context)
+    else:
+
+        ventas = Ventas.objects.all()
+        context={'ventas':ventas}
+        return render(request, 'ventas/ventas_edit.html', context)        

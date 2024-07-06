@@ -82,31 +82,40 @@
                         <h2>Clientes</h2>
                     </div>
 
-                    <div style=" text-align: center;">
-                           
-                        <h2>Formulario de Actualizar Clientes</h2>
-                        <form action="{% url 'clientesUpdate' %}" method="post" >
-                            {% csrf_token %}
-                
-                            <pre>Rut:                     <input type="text" name="rut"  value="{{cliente.rut}}"  ></pre>
-                            <pre>Nombre:                  <input type="text" name="nombre" value="{{cliente.nombre}}" ></pre>
-                            <pre>Apellido:             <input type="text" name="apellido" value="{{cliente.apellido}}"></pre>
-                            <pre>Celular:                 <input type="text" name="telefono" value="{{cliente.telefono}}"></pre>
-                            <pre>Email :                  <input type="email" name="email" value="{{cliente.email}}" ></pre>
-                
-                            <input type="submit" name="opcion" value="Actualizar">
-                
-                        </form><br><br>
-                        
-                        <a href="{% url 'clientes' %}"> Volver </a>
-                        <br>
-                        <div id="idMensajes">
-                            {% if mensaje %}
+                    <button type="button">
+                        <a href="{% url 'ventasAdd' %}"> Agregar </a>
+                    </button>
+            
+                    <div id="idMensajes">
+                        {% if mensaje %}
                             {{mensaje}}
-                            {% endif %}
-                        </div>
-                            
+                        {% endif %}    
                     </div>
+            
+            
+            
+                    <table>
+                        {% if ventas %}
+                            <th>Id</th>
+                            <th>Rut</th>
+                            <th>Fecha</th>
+                            <th>Total</th>
+                            <th>Eliminar</th>
+                            <th>Modificar</th>
+                            {% for venta in ventas %}
+                                <tr>
+                                    <td>{{ venta.id }}
+                                    <td>{{ venta.rut }}
+                                    <td>{{ venta.fecha }}
+                                    <td>{{ venta.total }}      
+                                    <td><a href="{% url 'ventas_del' pk=venta.id %}">Eliminar</a>
+                                    <td><a href="{% url 'ventas_findEdit' pk=venta.id %}">Modificar</a>
+                                    
+                                </tr>
+                            {% endfor %}
+                        {% endif %}        
+                    </table>
+                    
                 </div>
             </div>
         </div>
