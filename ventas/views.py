@@ -102,4 +102,46 @@ def clientesUpdate(request):
 
         clientes = Clientes.objects.all()
         context={'clientes':clientes}
-        return render(request, 'ventas/clientes_edit.html', context)    
+        return render(request, 'ventas/clientes_edit.html', context)
+
+def categorias(request):
+    categorias = Categorias.objects.all()
+    context = {"categorias" :categorias}
+    return render(request, 'ventas/categorias.html',context)
+
+def categoriasAdd(request):
+    if  request.method !="POST":
+        
+        productos = Productos.objects.all()
+        context={'productos':productos}
+        return render(request, 'ventas/categorias_add.html', context)
+    elif  request.method =="POST":
+
+
+
+        nombre=request.POST["nombre"]
+        descripcion=request.POST["descripcion"]
+
+        obj=Categorias.objects.create(nombre=nombre,
+                                    descripcion=descripcion,
+                                    )
+        obj.save()
+        context={'mensaje':"OK, datos grabados..."}
+        return render(request, 'ventas/categorias_add.html', context)
+
+def categorias_del(request):
+    context={}
+    try:
+        categoria=Categorias.objects.get(id_categorias=pk)
+
+        categoria.delete()
+        mensaje="Bien, datos eliminados..."
+        categorias = Categorias.objects.all()
+        context = {'categorias':categorias,  'mensaje' : mensaje}
+        return render(request, 'ventas/categorias.html', context)
+    except:
+        mensaje="Error, rut no existe..."
+        categorias = Categorias.objects.all()
+        context = {'categorias':categorias,  'mensaje' : mensaje}
+        return render(request, 'ventas/categorias.html', context)
+        

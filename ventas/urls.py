@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import index, login, dashboard, clientes, clientesAdd, clientes_del, clientes_findEdit, clientesUpdate
+from .views import index, login, dashboard, clientes, clientesAdd, clientes_del, clientes_findEdit, clientesUpdate, categorias, categoriasAdd, categorias_findEdit, categorias_del, categoriasUpdate
 
 
 urlpatterns = [
@@ -11,5 +11,10 @@ urlpatterns = [
     path('clientes_del/<str:pk>', clientes_del, name='clientes_del'),
     path('clientes_findEdit/<str:pk>', clientes_findEdit, name='clientes_findEdit'),
     path('clientesUpdate', clientesUpdate, name='clientesUpdate'),
+    path('categorias', categorias, name='categorias'),
+    path('categoriasAdd', categoriasAdd, name='categoriasAdd'),
+    path('categorias_del/<str:pk>', categorias_del, name='categorias_del'),
+    path('categorias_findEdit/<str:pk>', categorias_findEdit, name='categorias_findEdit' ),
+    path('categoriasUpdate', categoriasUpdate, name='categoriasUpdate')
 
 ]

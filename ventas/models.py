@@ -24,7 +24,7 @@ class Ventas(models.Model):
     fechaventas = models.DateField(blank=False, null=False)
     total = models.FloatField(default=0.0,blank=False,null=False)
     def __str__(self):
-        return str(self.fechaPedido)
+        return str(self.fechaventas)
 
 class Productos(models.Model):
     id_producto = models.AutoField(db_column='idProducto',primary_key=True)
