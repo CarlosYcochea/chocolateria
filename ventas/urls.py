@@ -1,9 +1,5 @@
 from django.urls import path
-<<<<<<< HEAD
 from .views import index, login, dashboard, clientes, clientesAdd, clientes_del, clientes_findEdit, clientesUpdate, ventas, ventasAdd, ventas_del, ventas_findEdit, ventasUpdate
-=======
-from .views import index, login, dashboard, clientes, clientesAdd, clientes_del, clientes_findEdit, clientesUpdate, categorias, categoriasAdd, categorias_findEdit, categorias_del, categoriasUpdate
->>>>>>> carlos
 
 
 urlpatterns = [
