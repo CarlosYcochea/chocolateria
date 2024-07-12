@@ -79,44 +79,19 @@
             <div class="detalles">
                 <div class="clientes">
                     <div class="header">
-                        <h2>Clientes</h2>
+                        <h2> Detalle Ventas</h2>
                     </div>
 
-                    <button type="button">
-                        <a href="{% url 'clientesAdd' %}"> Agregar </a>
-                    </button>
-            
-                    <div id="idMensajes">
-                        {% if mensaje %}
-                            {{mensaje}}
-                        {% endif %}    
+                    <div style="text-align: center;">
+                        <h2>Formulario CRUD para detalles_ventas</h2><br>
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            {{ form.as_table }}
+                            <input type="submit" value="Agregar">
+                        </form><br><br>
+                        <a href="{% url 'detalles_ventas' %}">Volver</a>
                     </div>
-            
-            
-            
-                    <table>
-                        {% if clientes %}
-                            <th>Rut</th>
-                            <th>Nombre</th>
-                            <th>Apellido</th>
-                            <th>Telefono</th>
-                            <th>Email</th>
-                            <th>Eliminar</th>
-                            <th>Modificar</th>
-                            {% for cliente in clientes %}
-                                <tr>
-                                    <td>{{ cliente.rut }}
-                                    <td>{{ cliente.nombre }}
-                                    <td>{{ cliente.apellido }}
-                                    <td>{{ cliente.telefono }}
-                                    <td>{{ cliente.email }}       
-                                    <td><a href="{% url 'clientes_del' pk=cliente.rut %}">Eliminar</a>
-                                    <td><a href="{% url 'clientes_findEdit' pk=cliente.rut %}">Modificar</a>
-                                    
-                                </tr>
-                            {% endfor %}
-                        {% endif %}        
-                    </table>
+                
                     
                 </div>
             </div>

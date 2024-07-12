@@ -1,5 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Clientes, Categorias, Ventas, DetalleVentas, Productos
+from .forms import VentasForm, CategoriaForm, ProductoForm, DetalleVentasForm
+from django.http import HttpResponse
+
 
 # Create your views here.
 
@@ -110,33 +113,30 @@ def ventas(request):
     return render(request, 'ventas/ventas.html',context)
 
 def ventasAdd(request):
-    if  request.method !="POST":
-        
-        productos = Productos.objects.all()
-        context={'productos':productos}
-        return render(request, 'ventas/ventas_add.html', context)
-    elif  request.method =="POST":
+    print("estoy en controlador ventasAdd...")
+    context={}
+
+    if request.method == "POST":
+        print("controlador es un post...")
+        form = VentasForm(request.POST)
+        if form.is_valid():
+            print("estoy en agregar, is_valid")
+            form.save()
 
 
-        nombre=request.POST["rut"]
-        fechaventas=request.POST["fechaventas"]
-        total=request.POST["total"]
+            form= VentasForm()
 
-
-
-        objcliente=Clientes.objects.get(rut = nombre)
-        obj=Ventas.objects.create(  fechaventas=fechaventas,
-                                    total=total,
-                                    rut=objcliente
-                                    )
-        obj.save()
-        context={'mensaje':"OK, datos grabados..."}
-        return render(request, 'ventas/ventas_add.html', context)
+            context={'mensaje':"Ok, datos grabados...",'form':form}
+            return render(request,"ventas/ventas_add.html", context)
+    else:
+        form = VentasForm()
+        context={'form':form}
+        return render(request,'ventas/ventas_add.html', context)
 
 def ventas_del(request,pk):
     context={}
     try:
-        venta=Ventas.objects.get(id=pk)
+        venta=Ventas.objects.get(id_ventas=pk)
 
         venta.delete()
         mensaje="Bien, datos eliminados..."
@@ -149,19 +149,33 @@ def ventas_del(request,pk):
         context = {'ventas': ventas,  'mensaje' : mensaje}
         return render(request, 'ventas/ventas.html', context)
 
-def ventas_findEdit(request,pk):
-
-    if pk != "":
-        venta=Ventas.objects.get(id=pk)
-        clientes = Clientes.objects.all()
-
-
-        context={'venta':venta, 'clientes':clientes}
+def ventas_findEdit(request, pk):
+    try:
+        venta=Ventas.objects.get(id_ventas=pk)
+        context={}
         if venta:
-            return render(request, 'ventas/ventas_edit.html', context)
-        else:
-            context={'mensaje':"Error, id no existe..."}
-            return render(request, 'ventas/ventas.html', context)
+            print("Edit encontro el venta...")
+            if request.method == "POST":
+                print("edit, es un POST")
+                form = VentasForm(request.POST,instance=venta)
+                form.save()
+                mensaje="Bien, datos actualizados..."
+                print(mensaje)
+                context = {'venta':venta, 'form':form, 'mensaje':mensaje}
+                return render(request,'ventas/ventas_edit.html', context)
+            else:
+
+                print("edit, No es un POST")
+                form = VentasForm(instance=venta)
+                mensaje=""
+                context = {'venta':venta, 'form':form, 'mensaje':mensaje}
+                return render(request,'ventas/ventas_edit.html', context)
+    except:
+        print("Error, id no existe...")
+        venta= VentasForm.objects.all()
+        mensaje="Error, id no existe"
+        context={'mensaje':mensaje,'venta':venta}
+        return render(request, 'ventas/ventas.html', context)
         
 def ventasUpdate(request):
 
@@ -195,24 +209,25 @@ def categorias(request):
     return render(request, 'ventas/categorias.html',context)
 
 def categoriasAdd(request):
-    if  request.method !="POST":
-        
-        productos = Productos.objects.all()
-        context={'productos':productos}
-        return render(request, 'ventas/categorias_add.html', context)
-    elif  request.method =="POST":
+    print("estoy en controlador generosAdd...")
+    context={}
+
+    if request.method == "POST":
+        print("controlador es un post...")
+        form = CategoriaForm(request.POST)
+        if form.is_valid:
+            print("estoy en agregar, is_valid")
+            form.save()
 
 
+            form=CategoriaForm()
 
-        nombre=request.POST["nombre"]
-        descripcion=request.POST["descripcion"]
-
-        obj=Categorias.objects.create(nombre=nombre,
-                                    descripcion=descripcion,
-                                    )
-        obj.save()
-        context={'mensaje':"OK, datos grabados..."}
-        return render(request, 'ventas/categorias_add.html', context)
+            context={'mensaje':"Ok, datos grabados...",'form':form}
+            return render(request,"ventas/categorias_add.html", context)
+    else:
+        form = CategoriaForm()
+        context={'form':form}
+        return render(request,'ventas/categorias_add.html', context)
 
 def categorias_del(request, pk):
     context={}
@@ -231,18 +246,33 @@ def categorias_del(request, pk):
         return render(request, 'ventas/categorias.html', context)
     
 def categorias_findEdit(request, pk):
-
-     if pk != "":
+    try:
         categoria=Categorias.objects.get(id_categorias=pk)
-
-
-        context={'categoria':categoria}
+        context={}
         if categoria:
-            return render(request, 'ventas/categorias_edit.html', context)
-        else:
-            context={'mensaje':"Error, rut no existe..."}
-            return render(request, 'ventas/categorias.html', context)
+            print("Edit encontro el categoria...")
+            if request.method == "POST":
+                print("edit, es un POST")
+                form = CategoriaForm(request.POST,instance=categoria)
+                form.save()
+                mensaje="Bien, datos actualizados..."
+                print(mensaje)
+                context = {'categoria':categoria, 'form':form, 'mensaje':mensaje}
+                return render(request,'ventas/categorias_edit.html', context)
+            else:
 
+                print("edit, No es un POST")
+                form = CategoriaForm(instance=categoria)
+                mensaje=""
+                context = {'categoria':categoria, 'form':form, 'mensaje':mensaje}
+                return render(request,'ventas/categorias_edit.html', context)
+    except:
+        print("Error, id no existe...")
+        categoria= CategoriaForm.objects.all()
+        mensaje="Error, id no existe"
+        context={'mensaje':mensaje,'categoria':categoria}
+        return render(request, 'ventas/categorias.html', context)
+    
 def categoriasUpdate(request):
 
     if request.method == "POST":
@@ -263,4 +293,201 @@ def categoriasUpdate(request):
 
         categorias = Categorias.objects.all()
         context={'categorias':categorias}
-        return render(request, 'ventas/categorias_edit.html', context)            
+        return render(request, 'ventas/categorias_edit.html', context) 
+
+def productos(request):
+    productos = Productos.objects.all()
+    context = {"productos" :productos}
+    return render(request, 'ventas/productos.html',context)
+
+def productosAdd(request):
+    print("estoy en controlador productosAdd...")
+    context={}
+
+    if request.method == "POST":
+        print("controlador es un post...")
+        form = ProductoForm(request.POST)
+        if form.is_valid:
+            print("estoy en agregar, is_valid")
+            form.save()
+
+
+            form= ProductoForm()
+
+            context={'mensaje':"Ok, datos grabados...",'form':form}
+            return render(request,"ventas/productos_add.html", context)
+    else:
+        form = ProductoForm()
+        context={'form':form}
+        return render(request,'ventas/productos_add.html', context)
+
+def productos_del(request, pk):
+    context={}
+    try:
+        producto = Productos.objects.get(id_producto=pk)
+
+        producto.delete()
+        mensaje="Bien, datos eliminados..."
+        productos = Productos.objects.all()
+        context = {'productos':productos,  'mensaje' : mensaje}
+        return render(request, 'ventas/productos.html', context)
+    except:
+        mensaje="Error, id no existe..."
+        productos = Productos.objects.all()
+        context = {'productos':productos,  'mensaje' : mensaje}
+        return render(request, 'ventas/productos.html', context)
+
+def productos_findEdit(request, pk):
+    try:
+        producto=Productos.objects.get(id_producto=pk)
+        context={}
+        if producto:
+            print("Edit encontro el producto...")
+            if request.method == "POST":
+                print("edit, es un POST")
+                form = ProductoForm(request.POST,instance=producto)
+                form.save()
+                mensaje="Bien, datos actualizados..."
+                print(mensaje)
+                context = {'producto':producto, 'form':form, 'mensaje':mensaje}
+                return render(request,'ventas/productos_edit.html', context)
+            else:
+
+                print("edit, No es un POST")
+                form = ProductoForm(instance=producto)
+                mensaje=""
+                context = {'producto':producto, 'form':form, 'mensaje':mensaje}
+                return render(request,'ventas/productos_edit.html', context)
+    except:
+        print("Error, id no existe...")
+        producto= ProductoForm.objects.all()
+        mensaje="Error, id no existe"
+        context={'mensaje':mensaje,'producto':producto}
+        return render(request, 'ventas/productos.html', context)
+
+def productosUpdate(request):
+
+    if request.method == "POST":
+
+
+        nombre=request.POST["nombre"]
+        descripcion=request.POST["descripcion"]
+        precio=request.POST["precio"]
+        id_categorias=request.POST["id_categorias"]
+
+
+        objcategoria=Categorias.objects.get(id_categorias=id_categorias)
+
+        producto = Productos()
+        producto.nombre=nombre
+        producto.descripcion=descripcion
+        producto.precio=precio
+        producto.id_categorias=objcategoria
+        producto.save()
+
+        context={'mensaje':"Ok, datos actualizados...",'producto':producto }
+        return render(request, 'ventas/productos_edit.html', context)
+    else:
+
+        productos = Productos.objects.all()
+        context={'productos':productos}
+        return render(request, 'ventas/productos_edit.html', context)
+
+def detalles_ventas(request):
+    detalles_ventas = DetalleVentas.objects.all()
+    context = {"detalles_ventas" :detalles_ventas}
+    return render(request, 'ventas/detalles_ventas.html',context)
+
+def detalles_ventasAdd(request):
+    print("estoy en controlador detalles_ventasAdd...")
+    context={}
+
+    if request.method == "POST":
+        print("controlador es un post...")
+        form = DetalleVentasForm(request.POST)
+        if form.is_valid:
+            print("estoy en agregar, is_valid")
+            form.save()
+
+
+            form= DetalleVentasForm()
+
+            context={'mensaje':"Ok, datos grabados...",'form':form}
+            return render(request,"ventas/detalles_ventas_add.html", context)
+    else:
+        form = DetalleVentasForm()
+        context={'form':form}
+        return render(request,'ventas/detalles_ventas_add.html', context)
+
+def detalles_ventas_del(request, pk):
+    context={}
+    try:
+        detalle_ventas = DetalleVentas.objects.get(id_detalle_ventas=pk)
+
+        detalle_ventas.delete()
+        mensaje="Bien, datos eliminados..."
+        detalles_ventas = DetalleVentas.objects.all()
+        context = {'detalles_ventas':detalles_ventas,  'mensaje' : mensaje}
+        return render(request, 'ventas/detalles_ventas.html', context)
+    except:
+        mensaje="Error, id no existe..."
+        detalles_ventas = DetalleVentas.objects.all()
+        context = {'detalles_ventas':detalles_ventas,  'mensaje' : mensaje}
+        return render(request, 'ventas/detalles_ventas.html', context)
+
+def detalles_ventas_findEdit(request, pk):
+    try:
+        detalle_ventas=DetalleVentas.objects.get(id_detalle_ventas=pk)
+        context={}
+        if detalle_ventas:
+            print("Edit encontro el detalle_ventas...")
+            if request.method == "POST":
+                print("edit, es un POST")
+                form = DetalleVentasForm(request.POST,instance=detalle_ventas)
+                form.save()
+                mensaje="Bien, datos actualizados..."
+                print(mensaje)
+                context = {'detalle_ventas':detalle_ventas, 'form':form, 'mensaje':mensaje}
+                return render(request,'ventas/detalles_ventas_edit.html', context)
+            else:
+
+                print("edit, No es un POST")
+                form = DetalleVentasForm(instance=detalle_ventas)
+                mensaje=""
+                context = {'detalle_ventas':detalle_ventas, 'form':form, 'mensaje':mensaje}
+                return render(request,'ventas/detalles_ventas_edit.html', context)
+    except:
+        print("Error, id no existe...")
+        detalle_ventas= DetalleVentasForm.objects.all()
+        mensaje="Error, id no existe"
+        context={'mensaje':mensaje,'detalle_ventas':detalle_ventas}
+        return render(request, 'ventas/detalles_ventas.html', context)
+
+def detalles_ventasUpdate(request):
+
+    if request.method == "POST":
+
+
+        id_ventas=request.POST["id_ventas"]
+        id_producto=request.POST["id_producto"]
+        cantidad=request.POST["cantidad"]
+        precio=request.POST["precio"]
+
+
+        objventas=Ventas.objects.get(id_ventas=id_ventas)
+        objproducto=Productos.objects.get(id_producto=id_producto)
+
+        detalle_ventas = DetalleVentas()
+        detalle_ventas.id_ventas=objventas
+        detalle_ventas.id_producto=objproducto
+        detalle_ventas.cantidad=cantidad
+        detalle_ventas.precio=precio
+        detalle_ventas.save()
+
+        context={'mensaje':"Ok, datos actualizados...",'detalle_ventas':detalle_ventas }
+        return render(request, 'ventas/detalles_ventas_edit.html', context)
+    else:
+
+        detalles_ventas = DetalleVentas.objects.all()
+        context={'detalles_ventas':detalles_ventas}
+        return render(request, 'ventas/detalles_ventas_edit.html', context)          

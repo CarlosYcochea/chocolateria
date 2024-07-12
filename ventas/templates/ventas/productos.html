@@ -79,11 +79,11 @@
             <div class="detalles">
                 <div class="clientes">
                     <div class="header">
-                        <h2>Clientes</h2>
+                        <h2>Productos</h2>
                     </div>
 
                     <button type="button">
-                        <a href="{% url 'clientesAdd' %}"> Agregar </a>
+                        <a href="{% url 'productosAdd' %}"> Agregar </a>
                     </button>
             
                     <div id="idMensajes">
@@ -95,27 +95,28 @@
             
             
                     <table>
-                        {% if clientes %}
-                            <th>Rut</th>
-                            <th>Nombre</th>
-                            <th>Apellido</th>
-                            <th>Telefono</th>
-                            <th>Email</th>
-                            <th>Eliminar</th>
-                            <th>Modificar</th>
-                            {% for cliente in clientes %}
+                        {% if productos %}
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Descripción</th>
+                                <th>Precio</th>
+                                <th>Eliminar</th>
+                                <th>Modificar</th>
+                            </tr>
+                            {% for producto in productos %}
                                 <tr>
-                                    <td>{{ cliente.rut }}
-                                    <td>{{ cliente.nombre }}
-                                    <td>{{ cliente.apellido }}
-                                    <td>{{ cliente.telefono }}
-                                    <td>{{ cliente.email }}       
-                                    <td><a href="{% url 'clientes_del' pk=cliente.rut %}">Eliminar</a>
-                                    <td><a href="{% url 'clientes_findEdit' pk=cliente.rut %}">Modificar</a>
-                                    
+                                    <td>{{ producto.nombre }}</td>
+                                    <td>{{ producto.descripcion }}</td>
+                                    <td>{{ producto.precio }}</td>
+                                    <td><a href="{% url 'producto_del' pk=producto.id_productos %}">Eliminar</a></td>
+                                    <td><a href="{% url 'producto_findEdit' pk=producto.id_productos %}">Modificar</a></td>
                                 </tr>
                             {% endfor %}
-                        {% endif %}        
+                        {% else %}
+                            <tr>
+                                <td colspan="5">No hay productos disponibles.</td>
+                            </tr>
+                        {% endif %}
                     </table>
                     
                 </div>

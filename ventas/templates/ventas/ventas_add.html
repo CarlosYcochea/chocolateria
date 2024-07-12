@@ -30,25 +30,25 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="{% url 'ventas' %}">
                         <span class="icono"><ion-icon name="cart-outline"></ion-icon></span>
                         <span class="titulo">Ventas</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="{% url 'productos' %}">
                         <span class="icono"><ion-icon name="help-circle-outline"></ion-icon></span>
                         <span class="titulo">Productos</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="{% url 'detalles_ventas' %}">
                         <span class="icono"><ion-icon name="settings-outline"></ion-icon></span>
                         <span class="titulo">Detalle venta</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="{% url 'categorias' %}">
                         <span class="icono"><ion-icon name="settings-outline"></ion-icon></span>
                         <span class="titulo">Categorias</span>
                     </a>
@@ -82,29 +82,14 @@
                         <h2>Ventas</h2>
                     </div>
 
-                    <div style=" text-align: center;">
-                        <h2> Formulario CRUD para Ventas</h2><br>
-                        <form action="ventasAdd" method="post">
+                    <div style="text-align: center;">
+                        <h2>Formulario CRUD para Ventas</h2><br>
+                        <form action="" method="post">
                             {% csrf_token %}
-                
-                            <pre>Nombre:            <select name="rut">
-                                {% for cliente in clientes %}
-                                    <option value="{{cliente.rut}}">{{cliente.nombre}}</option>
-                                {% endfor %}
-                                </select></pre>
-                            <pre>Fecha:         <input type="date" name="fechaventas"></pre>
-                            <pre>Total:       <input type="number" name="total"></pre>
-                
-                            <input type="submit" name="opcion" value="Agregar">
+                            {{ form.as_table }}
+                            <input type="submit" value="Agregar">
                         </form><br><br>
                         <a href="{% url 'ventas' %}">Volver</a>
-                        <br>
-                        <div id="idMensajes">
-                            {% if mensaje %}
-                            {{mensaje}}
-                            {% endif %}
-                
-                        </div>
                     </div>
                     
                 </div>
