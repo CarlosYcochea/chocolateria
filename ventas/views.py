@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import Clientes, Categorias, Ventas, DetalleVentas, Productos
 from .forms import VentasForm, CategoriaForm, ProductoForm, DetalleVentasForm
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -12,17 +13,16 @@ def index(request):
 
 def login(request):
 
-    return render(request, 'ventas/login.html')
+    return render(request, 'registration/login.html')
 
-def dashboard(request):
 
-    return render(request, 'ventas/dashboard.html')
-
+@login_required
 def clientes(request):  
     clientes = Clientes.objects.all()
     context = {"clientes" :clientes}
     return render(request, 'ventas/clientes.html',context)
 
+@login_required
 def clientesAdd(request):
     if  request.method !="POST":
         
@@ -48,7 +48,8 @@ def clientesAdd(request):
         obj.save()
         context={'mensaje':"OK, datos grabados..."}
         return render(request, 'ventas/clientes_add.html', context)
-    
+
+@login_required    
 def clientes_del(request,pk):
     context={}
     try:
@@ -65,6 +66,7 @@ def clientes_del(request,pk):
         context = {'clientes': clientes,  'mensaje' : mensaje}
         return render(request, 'ventas/clientes.html', context)
 
+@login_required
 def clientes_findEdit(request,pk):
 
     if pk != "":
@@ -78,7 +80,7 @@ def clientes_findEdit(request,pk):
             context={'mensaje':"Error, rut no existe..."}
             return render(request, 'ventas/clientes.html', context)
         
-
+@login_required
 def clientesUpdate(request):
 
     if request.method == "POST":
@@ -107,11 +109,13 @@ def clientesUpdate(request):
         context={'clientes':clientes}
         return render(request, 'ventas/clientes_edit.html', context)
 
+@login_required
 def ventas(request):
     ventas = Ventas.objects.all()
     context = {"ventas" :ventas}
     return render(request, 'ventas/ventas.html',context)
 
+@login_required
 def ventasAdd(request):
     print("estoy en controlador ventasAdd...")
     context={}
@@ -133,6 +137,7 @@ def ventasAdd(request):
         context={'form':form}
         return render(request,'ventas/ventas_add.html', context)
 
+@login_required
 def ventas_del(request,pk):
     context={}
     try:
@@ -149,6 +154,7 @@ def ventas_del(request,pk):
         context = {'ventas': ventas,  'mensaje' : mensaje}
         return render(request, 'ventas/ventas.html', context)
 
+@login_required
 def ventas_findEdit(request, pk):
     try:
         venta=Ventas.objects.get(id_ventas=pk)
@@ -176,7 +182,8 @@ def ventas_findEdit(request, pk):
         mensaje="Error, id no existe"
         context={'mensaje':mensaje,'venta':venta}
         return render(request, 'ventas/ventas.html', context)
-        
+
+@login_required        
 def ventasUpdate(request):
 
     if request.method == "POST":
@@ -203,11 +210,13 @@ def ventasUpdate(request):
         context={'ventas':ventas}
         return render(request, 'ventas/ventas_edit.html', context)
 
+@login_required
 def categorias(request):
     categorias = Categorias.objects.all()
     context = {"categorias" :categorias}
     return render(request, 'ventas/categorias.html',context)
 
+@login_required
 def categoriasAdd(request):
     print("estoy en controlador generosAdd...")
     context={}
@@ -229,6 +238,7 @@ def categoriasAdd(request):
         context={'form':form}
         return render(request,'ventas/categorias_add.html', context)
 
+@login_required
 def categorias_del(request, pk):
     context={}
     try:
@@ -244,7 +254,8 @@ def categorias_del(request, pk):
         categorias = Categorias.objects.all()
         context = {'categorias':categorias,  'mensaje' : mensaje}
         return render(request, 'ventas/categorias.html', context)
-    
+
+@login_required    
 def categorias_findEdit(request, pk):
     try:
         categoria=Categorias.objects.get(id_categorias=pk)
@@ -272,7 +283,8 @@ def categorias_findEdit(request, pk):
         mensaje="Error, id no existe"
         context={'mensaje':mensaje,'categoria':categoria}
         return render(request, 'ventas/categorias.html', context)
-    
+
+@login_required    
 def categoriasUpdate(request):
 
     if request.method == "POST":
@@ -295,11 +307,13 @@ def categoriasUpdate(request):
         context={'categorias':categorias}
         return render(request, 'ventas/categorias_edit.html', context) 
 
+@login_required
 def productos(request):
     productos = Productos.objects.all()
     context = {"productos" :productos}
     return render(request, 'ventas/productos.html',context)
 
+@login_required
 def productosAdd(request):
     print("estoy en controlador productosAdd...")
     context={}
@@ -321,6 +335,7 @@ def productosAdd(request):
         context={'form':form}
         return render(request,'ventas/productos_add.html', context)
 
+@login_required
 def productos_del(request, pk):
     context={}
     try:
@@ -337,6 +352,7 @@ def productos_del(request, pk):
         context = {'productos':productos,  'mensaje' : mensaje}
         return render(request, 'ventas/productos.html', context)
 
+@login_required
 def productos_findEdit(request, pk):
     try:
         producto=Productos.objects.get(id_producto=pk)
@@ -365,6 +381,7 @@ def productos_findEdit(request, pk):
         context={'mensaje':mensaje,'producto':producto}
         return render(request, 'ventas/productos.html', context)
 
+@login_required
 def productosUpdate(request):
 
     if request.method == "POST":
@@ -393,11 +410,13 @@ def productosUpdate(request):
         context={'productos':productos}
         return render(request, 'ventas/productos_edit.html', context)
 
+@login_required
 def detalles_ventas(request):
     detalles_ventas = DetalleVentas.objects.all()
     context = {"detalles_ventas" :detalles_ventas}
     return render(request, 'ventas/detalles_ventas.html',context)
 
+@login_required
 def detalles_ventasAdd(request):
     print("estoy en controlador detalles_ventasAdd...")
     context={}
@@ -419,6 +438,7 @@ def detalles_ventasAdd(request):
         context={'form':form}
         return render(request,'ventas/detalles_ventas_add.html', context)
 
+@login_required
 def detalles_ventas_del(request, pk):
     context={}
     try:
@@ -435,6 +455,7 @@ def detalles_ventas_del(request, pk):
         context = {'detalles_ventas':detalles_ventas,  'mensaje' : mensaje}
         return render(request, 'ventas/detalles_ventas.html', context)
 
+@login_required
 def detalles_ventas_findEdit(request, pk):
     try:
         detalle_ventas=DetalleVentas.objects.get(id_detalle_ventas=pk)
@@ -463,6 +484,7 @@ def detalles_ventas_findEdit(request, pk):
         context={'mensaje':mensaje,'detalle_ventas':detalle_ventas}
         return render(request, 'ventas/detalles_ventas.html', context)
 
+@login_required
 def detalles_ventasUpdate(request):
 
     if request.method == "POST":
@@ -490,4 +512,11 @@ def detalles_ventasUpdate(request):
 
         detalles_ventas = DetalleVentas.objects.all()
         context={'detalles_ventas':detalles_ventas}
-        return render(request, 'ventas/detalles_ventas_edit.html', context)          
+        return render(request, 'ventas/detalles_ventas_edit.html', context)
+
+@login_required
+def dashboard(request):
+    request.session["usuario"]='admin'
+    usuario=request.session["usuario"]
+    context = {'usuario':usuario}
+    return render(request, 'ventas/dashboard.html', context)              
