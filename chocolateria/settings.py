@@ -55,7 +55,7 @@ ROOT_URLCONF = 'chocolateria.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / "templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -67,6 +67,10 @@ TEMPLATES = [
         },
     },
 ]
+
+LOGIN_URL = 'login' #este es cuando colocan la ruta directamente 
+LOGIN_REDIRECT_URL = "dashboard" #redireccion al iniciar sesion
+LOGOUT_REDIRECT_URL = "index" #redireaccion al cerrar sesion
 
 WSGI_APPLICATION = 'chocolateria.wsgi.application'
 
