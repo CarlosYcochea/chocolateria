@@ -1,9 +1,5 @@
 from django import forms
-<<<<<<< HEAD
-from .models import Ventas, Categorias
-=======
 from .models import Ventas, Categorias, Productos, DetalleVentas
->>>>>>> 77a67a8ae91b03d3a3c69b7471f03bf24bb77824
 
 class VentasForm(forms.ModelForm):
 	class Meta:
@@ -14,9 +10,6 @@ class VentasForm(forms.ModelForm):
 class CategoriaForm(forms.ModelForm):
     class Meta:
         model = Categorias
-<<<<<<< HEAD
-        fields = ['nombre', 'descripcion']
-=======
         fields = ['nombre', 'descripcion']
 
 class ProductoForm(forms.ModelForm):
@@ -29,4 +22,3 @@ class DetalleVentasForm(forms.ModelForm):
         model = DetalleVentas
         fields = ['id_ventas', 'id_producto', 'cantidad', 'precio']
 
->>>>>>> 77a67a8ae91b03d3a3c69b7471f03bf24bb77824
