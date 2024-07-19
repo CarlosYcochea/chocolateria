@@ -23,36 +23,46 @@
                         <span class="titulo">Dashboard</span>
                     </a>
                 </li>
+                {% if perms.ventas.view_clientes %}
                 <li>
                     <a href="{% url 'clientes' %}">
                         <span class="icono"><ion-icon name="person-outline"></ion-icon></span>
                         <span class="titulo">Clientes</span>
                     </a>
                 </li>
+                {% endif %}
+                {% if perms.ventas.view_ventas %}
                 <li>
                     <a href="{% url 'ventas' %}">
                         <span class="icono"><ion-icon name="cart-outline"></ion-icon></span>
                         <span class="titulo">Ventas</span>
                     </a>
                 </li>
+                {% endif %}
+                {% if perms.ventas.view_productos %}
                 <li>
                     <a href="{% url 'productos' %}">
                         <span class="icono"><ion-icon name="help-circle-outline"></ion-icon></span>
                         <span class="titulo">Productos</span>
                     </a>
                 </li>
+                {% endif %}
+                {% if perms.ventas.view_detalle_ventas %}
                 <li>
                     <a href="{% url 'detalles_ventas' %}">
                         <span class="icono"><ion-icon name="settings-outline"></ion-icon></span>
-                        <span class="titulo">Detalle venta</span>
+                        <span class="titulo">Detalle Venta</span>
                     </a>
                 </li>
+                {% endif %}
+                {% if perms.ventas.view_categorias %}
                 <li>
                     <a href="{% url 'categorias' %}">
                         <span class="icono"><ion-icon name="settings-outline"></ion-icon></span>
                         <span class="titulo">Categorias</span>
                     </a>
                 </li>
+                {% endif %}
                 <li>
                     <a href="{% url 'index' %}">
                         <span class="icono"><ion-icon name="log-out-outline"></ion-icon></span>
@@ -73,7 +83,7 @@
                     </label>
                 </div>
                 <div class="perfil-usuario">
-                    <img src="imgdashboard/profile-photo1.jpg" alt="">
+                    <img src="{% static 'ventas/img/profile-photo1.jpg' %}" alt="">
                 </div>
             </div>
             <div class="detalles">
@@ -81,10 +91,11 @@
                     <div class="header">
                         <h2>Ventas</h2>
                     </div>
-
+                    {% if perms.ventas.add_ventas %}
                     <button type="button">
                         <a href="{% url 'ventasAdd' %}"> Agregar </a>
                     </button>
+                    {% endif %}
             
                     <div id="idMensajes">
                         {% if mensaje %}
@@ -105,9 +116,13 @@
                                 <tr>
                                     <td>{{ venta.rut }}
                                     <td>{{ venta.fechaventas }}
-                                    <td>{{ venta.total }}      
+                                    <td>{{ venta.total }}
+                                    {% if perms.ventas.delete_ventas %}          
                                     <td><a href="{% url 'ventas_del' pk=venta.id_ventas %}">Eliminar</a>
+                                    {% endif %}
+                                    {% if perms.ventas.change_ventas %}    
                                     <td><a href="{% url 'ventas_findEdit' pk=venta.id_ventas %}">Modificar</a>
+                                    {% endif %}    
                                     
                                 </tr>
                             {% endfor %}
