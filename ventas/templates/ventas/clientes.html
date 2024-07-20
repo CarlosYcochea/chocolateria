@@ -121,10 +121,10 @@
                                     <td>{{ cliente.apellido }}
                                     <td>{{ cliente.telefono }}
                                     <td>{{ cliente.email }}
-                                    {% perms.ventas.delete_clientes %}           
+                                    {% if  perms.ventas.delete_clientes %}           
                                     <td><a href="{% url 'clientes_del' pk=cliente.rut %}">Eliminar</a>
                                     {% endif %}
-                                    {% perms.ventas.change_clientes %}    
+                                    {% if perms.ventas.change_clientes %}    
                                     <td><a href="{% url 'clientes_findEdit' pk=cliente.rut %}">Modificar</a>
                                     {% endif %}    
                                     
